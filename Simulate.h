@@ -25,47 +25,47 @@ void Simu::simulate() {
 	double vmax = sk.ZtoV(Zmax);
 	int flag = 1;
 	for (int i = 0; i < Intval; i++) {
-		// ·Ç¸ß·å·¢µç½×¶Î
+		// ï¿½Ç¸ß·å·¢ï¿½ï¿½×¶ï¿½
 		if (SimuR[i].t < 8 || (SimuR[i].t >= 12 && SimuR[i].t <= 16)) {
 			flag = 1;
-			// ÅÐ¶ÏÄ©Ë®Î»ÊÇ·ñ´óÓÚÆ½Ë®Î»
+			// ï¿½Ð¶ï¿½Ä©Ë®Î»ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Æ½Ë®Î»
 			if (sk.ZtoV(SimuR[i].Zup) + SimuR[i].Qin * 3600 > vflat) {
-				// ´óÓÚÆ½Ë®Î»£¬ÔòÊ±¶ÎÄ©Ë®Î»ÎªÆ½Ë®Î»£¬ÆäËûË®ÓÃÓÚ·¢µç
+				// ï¿½ï¿½ï¿½ï¿½Æ½Ë®Î»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ä©Ë®Î»ÎªÆ½Ë®Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½
 				SimuR[i + 1].Zup = Zflat;
 				SimuR[i].Qout = SimuR[i].Qin - (vflat - sk.ZtoV(SimuR[i].Zup)) / 3600;
 				SimuR[i].Qgen = SimuR[i].Qout;
-				// ¼ÆËãË®Í·
+				// ï¿½ï¿½ï¿½ï¿½Ë®Í·
 				SimuR[i].Hd = (SimuR[i].Zup + SimuR[i + 1].Zup) / 2 - sk.QtoZ(SimuR[i].Qout);
 
 				if(SimuR[i].Hd >= 8){
-					// ¼ÆËã³öÁ¦£¬²¢ÅÐ¶ÏÊÇ·ñ´óÓÚ»ú×é×î´ó³öÁ¦
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					SimuR[i].N = A * SimuR[i].Qgen * SimuR[i].Hd;
-					// ´óÓÚ×î´ó³öÁ¦£¬»ú×é·¢µçÎª×î´ó£¬²¢¸ù¾Ý×î´ó´¦Àí¼ÆËã·¢µçÁ÷Á¿
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é·¢ï¿½ï¿½Îªï¿½ï¿½ó£¬²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					if (SimuR[i].N > Nmax) {
 						SimuR[i].N = Nmax;
 						SimuR[i].Qgen = Nmax / A / SimuR[i].Hd;
 					}
-				}else{// Ë®Í·Ð¡ÓÚ8m£¬Ôò»ú×éÍ£»ú£¬¶àÓàµÄË®È«²¿µ±×÷ÆúË®
+				}else{// Ë®Í·Ð¡ï¿½ï¿½8mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®
 					SimuR[i].Qgen = 0;
 					SimuR[i].N = 0;
 				}
 				
 			}
-			else {// Ð¡ÓÚÆ½Ë®Î»£¬ÐîË®
+			else {// Ð¡ï¿½ï¿½Æ½Ë®Î»ï¿½ï¿½ï¿½ï¿½Ë®
 				SimuR[i + 1].Zup = sk.VtoZ(sk.ZtoV(SimuR[i].Zup) + SimuR[i].Qin * 3600);
 				SimuR[i].Qout = 0;
 				SimuR[i].N = 0;
 			}
 		}
 		
-		// µÚ¶þ¸öÆ½·å
+		// ï¿½Ú¶ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
 		else if (SimuR[i].t >= 21 && SimuR[i].t <= 23) {
 			flag = 1;
-			// À´¶àÉÙ·¢¶àÉÙ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Ù·ï¿½ï¿½ï¿½ï¿½ï¿½
 			SimuR[i + 1].Zup = SimuR[i].Zup;
 			SimuR[i].Qout = SimuR[i].Qin;
 			SimuR[i].Qgen = SimuR[i].Qout;
-			// ¼ÆËãË®Í·
+			// ï¿½ï¿½ï¿½ï¿½Ë®Í·
 			SimuR[i].Hd = (SimuR[i].Zup + SimuR[i + 1].Zup) / 2 - sk.QtoZ(SimuR[i].Qout);
 			if(SimuR[i].Hd > 8) {
 				SimuR[i].N = A * SimuR[i].Qgen * SimuR[i].Hd;
@@ -78,7 +78,7 @@ void Simu::simulate() {
 					while (abs(SimuR[i].Hd - h) > 0.1) {
 						h = SimuR[i].Hd;
 						SimuR[i].Qout = SimuR[i].Qgen = Nmax / A / h;
-						// ½«Ë®Î»Ðîµ½Æ½Ë®Î»£¬»¹¶àµÄÁ÷Á¿
+						// ï¿½ï¿½Ë®Î»ï¿½îµ½Æ½Ë®Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 						SimuR[i + 1].Zup = sk.VtoZ(sk.ZtoV(SimuR[i].Zup) + (SimuR[i].Qin - SimuR[i].Qout) * 3600);
 						SimuR[i].Hd = (SimuR[i].Zup + SimuR[i + 1].Zup) / 2 - sk.QtoZ(SimuR[i].Qout);
 						loop++;
@@ -88,7 +88,7 @@ void Simu::simulate() {
 					}
 
 					double Q = (sk.ZtoV(SimuR[i].Zup) + SimuR[i].Qin * 3600 - sk.ZtoV(Zflat)) / 3600;
-					// ¶àµÄÁ÷Á¿±ÈÊµ¼Ê·¢µçÁ÷Á¿´ó£¬Ôò»¹ÓÐÆúË®
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®
 					if(Q > SimuR[i].Qout) {
 						SimuR[i].Qout = Q;
 						SimuR[i + 1].Zup = Zflat;
@@ -107,22 +107,22 @@ void Simu::simulate() {
 						}
 					}
 
-					// Ê±¶ÎÄ©ËÀË®Î»¿ØÖÆ
+					// Ê±ï¿½ï¿½Ä©ï¿½ï¿½Ë®Î»ï¿½ï¿½ï¿½ï¿½
 					if (SimuR[i + 1].Zup < Zmin) {
 						SimuR[i].Qout = 0;
 						SimuR[i + 1].Zup = sk.VtoZ(sk.ZtoV(SimuR[i].Zup) + (SimuR[i].Qin - SimuR[i].Qout) * 3600);
 						SimuR[i].N = 0;
 					}
 				}
-			}else{// Ë®Í·µÍÓÚ8m
+			}else{// Ë®Í·ï¿½ï¿½ï¿½ï¿½8m
 				if (sk.ZtoV(SimuR[i].Zup) + SimuR[i].Qin * 3600 > vflat) {
-					// ´óÓÚÆ½Ë®Î»
+					// ï¿½ï¿½ï¿½ï¿½Æ½Ë®Î»
 					SimuR[i + 1].Zup = Zflat;
 					SimuR[i].Qout = SimuR[i].Qin - (vflat - sk.ZtoV(SimuR[i].Zup)) / 3600;
 					// SimuR[i].Hd = (SimuR[i].Zup + SimuR[i + 1].Zup) / 2 - sk.QtoZ(SimuR[i].Qout);
 					SimuR[i].N = 0;
 					SimuR[i].Qgen = 0;
-				} else {// Ð¡ÓÚÆ½Ë®Î»£¬ÐîË®
+				} else {// Ð¡ï¿½ï¿½Æ½Ë®Î»ï¿½ï¿½ï¿½ï¿½Ë®
 					SimuR[i + 1].Zup = sk.VtoZ(sk.ZtoV(SimuR[i].Zup) + SimuR[i].Qin * 3600);
 					SimuR[i].Qout = 0;
 					SimuR[i].Qgen = 0;
@@ -141,7 +141,7 @@ void Simu::simulate() {
 				while (abs(SimuR[i].Hd - h) > 0.1) {
 					h = SimuR[i].Hd;
 					SimuR[i].Qout = SimuR[i].Qgen = Nmax / A / h;
-					// ½«Ë®Î»Ðîµ½Æ½Ë®Î»£¬»¹¶àµÄÁ÷Á¿
+					// ï¿½ï¿½Ë®Î»ï¿½îµ½Æ½Ë®Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					SimuR[i + 1].Zup = sk.VtoZ(sk.ZtoV(SimuR[i].Zup) + (SimuR[i].Qin - SimuR[i].Qout) * 3600);
 					SimuR[i].Hd = (SimuR[i].Zup + SimuR[i + 1].Zup) / 2 - sk.QtoZ(SimuR[i].Qout);
 					loop++;
@@ -151,7 +151,7 @@ void Simu::simulate() {
 				}
 
 				double Q = (sk.ZtoV(SimuR[i].Zup) + SimuR[i].Qin * 3600 - sk.ZtoV(Zflat)) / 3600;
-				// ¶àµÄÁ÷Á¿±ÈÊµ¼Ê·¢µçÁ÷Á¿´ó£¬Ôò»¹ÓÐÆúË®
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®
 				if(Q > SimuR[i].Qout) {
 					SimuR[i].Qout = Q;
 					SimuR[i + 1].Zup = Zflat;
@@ -171,7 +171,7 @@ void Simu::simulate() {
 					}
 				}
 				
-				// Ê±¶ÎÄ©ËÀË®Î»¿ØÖÆ
+				// Ê±ï¿½ï¿½Ä©ï¿½ï¿½Ë®Î»ï¿½ï¿½ï¿½ï¿½
 				if (SimuR[i + 1].Zup < Zmin) {
 					SimuR[i].Qout = 0;
 					SimuR[i + 1].Zup = sk.VtoZ(sk.ZtoV(SimuR[i].Zup) + (SimuR[i].Qin - SimuR[i].Qout) * 3600);
@@ -193,17 +193,27 @@ void Simu::simulate() {
 			}
 		}
 
-		if (SimuR[i].t >= 0 && SimuR[i].t <= 7) {//¹Èµç£¨0.14£©
+		// if (SimuR[i].t >= 0 && SimuR[i].t <= 7) {//ï¿½Èµç£¨0.14ï¿½ï¿½
+		// 	SimuR[i].profit = 1000 * 0.14 * SimuR[i].N;
+		// }
+		// else if (SimuR[i].t >= 8 && SimuR[i].t <= 10) {//ï¿½ï¿½ï¿½ç£¨0.32ï¿½ï¿½
+		// 	SimuR[i].profit = 1000 * 0.32 * SimuR[i].N;
+		// }
+		// else if (SimuR[i].t >= 17 && SimuR[i].t <= 21) {//ï¿½ï¿½ï¿½ç£¨0.32ï¿½ï¿½
+		// 	SimuR[i].profit = 1000 * 0.32 * SimuR[i].N;
+		// }
+		// else {//ï¿½ï¿½ç£¨0.54ï¿½ï¿½
+		// 	SimuR[i].profit = 1000 * 0.54 * SimuR[i].N;
+		// }
+
+		if (SimuR[i].t >= 0 && SimuR[i].t <= 7) {//ä½Žè°·0.14
 			SimuR[i].profit = 1000 * 0.14 * SimuR[i].N;
 		}
-		else if (SimuR[i].t >= 8 && SimuR[i].t <= 10) {//Ñüµç£¨0.32£©
-			SimuR[i].profit = 1000 * 0.32 * SimuR[i].N;
-		}
-		else if (SimuR[i].t >= 17 && SimuR[i].t <= 21) {//Ñüµç£¨0.32£©
-			SimuR[i].profit = 1000 * 0.32 * SimuR[i].N;
-		}
-		else {//·åµç£¨0.54£©
+		else if ((SimuR[i].t >= 8 && SimuR[i].t <= 11) || (SimuR[i].t >= 17 && SimuR[i].t <= 20)) {//é«˜å³°0.54
 			SimuR[i].profit = 1000 * 0.54 * SimuR[i].N;
+		}
+		else {//å…¶ä»–å¹³å³°0.32
+			SimuR[i].profit = 1000 * 0.32 * SimuR[i].N;
 		}
 	}
 }

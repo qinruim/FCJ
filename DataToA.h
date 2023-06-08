@@ -22,7 +22,7 @@ dataToA::~dataToA()
 {
 }
 
-//¼òµ¥¼ÆËãA
+//ï¿½òµ¥¼ï¿½ï¿½ï¿½A
 void dataToA::ToA_Simple() {
 	double Ntotal = 0;
 	double Qtotal = 0;
@@ -45,19 +45,27 @@ void dataToA::ToA_Simple() {
 
 void dataToA::toProfit() {
 	for (int i = 0; i < Intval; i++) {
-		if (resvr[i].t >= 0 && resvr[i].t <= 7) {//¹Èµç£¨0.14£©
-			resvr[i].profit = 1000*0.14 * resvr[i].N;
+		// if (resvr[i].t >= 0 && resvr[i].t <= 7) {//ï¿½Èµç£¨0.14ï¿½ï¿½
+		// 	resvr[i].profit = 1000*0.14 * resvr[i].N;
+		// }
+		// else if (resvr[i].t >= 8 && resvr[i].t <= 10) {//ï¿½ï¿½ï¿½ç£¨0.32ï¿½ï¿½
+		// 	resvr[i].profit = 1000 * 0.32 * resvr[i].N;
+		// }
+		// else if (resvr[i].t >= 17 && resvr[i].t <= 21) {//ï¿½ï¿½ï¿½ç£¨0.32ï¿½ï¿½
+		// 	resvr[i].profit = 1000 * 0.32 * resvr[i].N;
+		// }
+		// else {//ï¿½ï¿½ç£¨0.54ï¿½ï¿½
+		// 	resvr[i].profit = 1000 * 0.54 * resvr[i].N;
+		// }
+		if (resvr[i].t >= 0 && resvr[i].t <= 7) {//ä½Žè°·0.14
+			resvr[i].profit = 1000 * 0.14 * resvr[i].N;
 		}
-		else if (resvr[i].t >= 8 && resvr[i].t <= 10) {//Ñüµç£¨0.32£©
-			resvr[i].profit = 1000 * 0.32 * resvr[i].N;
-		}
-		else if (resvr[i].t >= 17 && resvr[i].t <= 21) {//Ñüµç£¨0.32£©
-			resvr[i].profit = 1000 * 0.32 * resvr[i].N;
-		}
-		else {//·åµç£¨0.54£©
+		else if ((resvr[i].t >= 8 && resvr[i].t <= 11) || (resvr[i].t >= 17 && resvr[i].t <= 20)) {//é«˜å³°0.54
 			resvr[i].profit = 1000 * 0.54 * resvr[i].N;
 		}
-	}
+		else {//å…¶ä»–å¹³å³°0.32
+			resvr[i].profit = 1000 * 0.32 * resvr[i].N;
+		}
 }
 
 void dataToA::AToQout() {
